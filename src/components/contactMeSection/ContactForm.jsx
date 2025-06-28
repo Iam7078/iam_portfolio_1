@@ -1,82 +1,78 @@
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
+import { useState } from 'react'
 
-const ContactForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [success, setSuccess] = useState("");
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleMessage = (e) => {
-    setMessage(e.target.value);
-  };
-  const form = useRef();
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs
-      .sendForm("service_ko3hmpt", "template_ahbmmqd", form.current, {
-        publicKey: "I6HAT5mUZH7WHabGE",
-      })
-      .then(
-        () => {
-          setEmail("");
-          setName("");
-          setMessage("");
-          setSuccess("Message Sent Succesfully");
-        },
-        (error) => {
-          console.log("FAILED...", error.text);
-        }
-      );
-  };
+const ContactFormSimple = () => {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
+  const [showLink, setShowLink] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setShowLink(true)
+  }
+
+  const recipientEmail = "ilhammahfuri12@gmail.com"
+  const subject = `Pesan dari ${name}`
+  const body = `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`
+
+  const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
   return (
     <div>
-      <p className="text-cyan">{success}</p>
-      <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-4">
+      <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          name="from_name"
           placeholder="Your Name"
           required
           className="h-12 rounded-lg bg-lightBrown px-2"
           value={name}
-          onChange={handleName}
+          onChange={(e) => setName(e.target.value)}
         />
         <input
           type="email"
-          name="from_email"
           placeholder="Your Email"
           required
           className="h-12 rounded-lg bg-lightBrown px-2"
           value={email}
-          onChange={handleEmail}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <textarea
-          type="text"
-          name="message"
           rows="9"
           cols="50"
           placeholder="Message"
           required
-          className=" rounded-lg bg-lightBrown p-2"
+          className="rounded-lg bg-lightBrown p-2"
           value={message}
-          onChange={handleMessage}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <button
           type="submit"
           className="w-full rounded-lg border border-cyan text-white h-12 font-bold text-xl hover:bg-darkCyan bg-cyan transition-all duration-500"
         >
-          Send
+          Preview Email
         </button>
       </form>
-    </div>
-  );
-};
 
-export default ContactForm;
+      {showLink && (
+        <div className="mt-4 text-center">
+          <p className="text-white mb-2">Click the button below to send the email:</p>
+          <a
+            href={mailtoLink}
+            className="inline-block px-6 py-3 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all duration-300"
+            onClick={() => {
+              setName("")
+              setEmail("")
+              setMessage("")
+              setShowLink(false)
+            }}
+          >
+            Send Email Now
+          </a>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default ContactFormSimple

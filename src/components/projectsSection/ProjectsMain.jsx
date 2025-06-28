@@ -15,21 +15,35 @@ const projects = [
     name: "Employee Assessment",
     year: "Nov2023",
     align: "left",
-    image: "/images/website-img-2.webp",
-    link: "#",
-  },
-  {
-    name: "Arsip Digital",
-    year: "Jan2024",
-    align: "right",
-    image: "/images/website-img-3.jpg",
+    image: "/images/project-img-2.png",
     link: "#",
   },
   {
     name: "Jepara Assessment",
     year: "Oct2024",
-    align: "left",
+    align: "right",
     image: "/images/website-img-4.jpg",
+    link: "#",
+  },
+  {
+    name: "Soto Ayam Semarang",
+    year: "Apr2025",
+    align: "left",
+    image: "/images/project-img-5.png",
+    link: "https://soto-ayam-semarang.vercel.app",
+  },
+  {
+    name: "Indra Ruby Collection",
+    year: "Mei2025",
+    align: "right",
+    image: "/images/project-img-6.png",
+    link: "https://indra-ruby-collection.vercel.app",
+  },
+  {
+    name: "Arsip Digital",
+    year: "Jun2025",
+    align: "left",
+    image: "/images/project-img-7.png",
     link: "#",
   },
 ];
@@ -54,6 +68,7 @@ const ProjectsMain = () => {
               year={project.year}
               align={project.align}
               image={project.image}
+              link={project.link}
             />
           );
         })}
